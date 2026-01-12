@@ -2,48 +2,134 @@
 <html lang="en">
 <head>
   <link rel="stylesheet" href="style2.css">
-<meta charset="UTF-8">
-<title>Srisailam Smart Navigation</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Srisailam Smart Navigation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="icon" type="image/png" href="logo.jpg">
+  <style>
+      /* --- FOOTER CREDITS STYLING (Subtle/Hidden mode) --- */
+      .dev-credit {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          color: #999; /* Light gray to blend in */
+          text-decoration: none;
+          font-weight: normal;
+          transition: all 0.2s ease;
+          padding: 0 4px;
+      }
+
+      /* Only show color when someone actually hovers over it */
+      .dev-credit:hover {
+          color: #0077b5; 
+          opacity: 1;
+      }
+
+      .dev-credit svg {
+          width: 12px; /* Very small icon */
+          height: 12px;
+          fill: currentColor;
+          position: relative;
+          top: -1px; 
+      }
+
+      .divider {
+          color: #ddd; /* Very faint divider */
+          margin: 0 3px;
+      }
+      
+      /* Wrapper to push it to bottom */
+      #developer-credits {
+          margin-top: 25px; 
+          padding-top: 10px;
+          border-top: 1px solid #f0f0f0; /* Faint line to separate it */
+          font-size: 11px; /* Small font size */
+          opacity: 0.6; /* Semi-transparent */
+      }
+      
+      #developer-credits:hover {
+          opacity: 1; /* Make it visible if they intentionally look at it */
+      }
+  </style>
 </head>
 <body id="top">
 <header>
-<h1>Srisailam Area Navigation</h1>
-<h4>Select category → choose place → navigate</h4>
-<div id="language-selector">
-    <label for="lang">Language:</label>
-    <select id="lang">
-        <option value="en">English</option>
-        <option value="te">తెలుగు</option>
-        <option value="hi">हिंदी</option>
-        <option value="ta">தமிழ்</option>
-        <option value="kn">ಕನ್ನಡ</option>
-        <option value="ml">മലയാളം</option>
-    </select>
-</div>
-<div id="search-box">
-    <div style="position: relative; max-width: 500px; margin: 0 auto;">
-        <input
-            type="text"
-            id="searchInput"
-            placeholder="Search places, food, temples…"
-        />
-        <button 
-            id="clearSearch" 
-            type="button"
-            style="display: none;"
-            aria-label="Clear search"
-        >✕</button>
+  <h1 id="app-title">Srisailam Area Navigation</h1>
+  <h4 id="app-subtitle">Select category → choose place → navigate</h4>
+  
+  <div id="language-selector">
+      <label id="lang-label" for="lang">Language:</label>
+      <select id="lang">
+          <option value="en">English</option>
+          <option value="te">తెలుగు</option>
+          <option value="hi">हिंदी</option>
+          <option value="ta">தமிழ்</option>
+          <option value="kn">ಕನ್ನಡ</option>
+          <option value="ml">മലയാളം</option>
+      </select>
+  </div>
+  <div id="search-box">
+      <div style="position: relative; max-width: 500px; margin: 0 auto;">
+          <input
+              type="text"
+              id="searchInput"
+              placeholder="Search places, food, temples…"
+          />
+          <button 
+              id="clearSearch" 
+              type="button"
+              style="display: none;"
+              aria-label="Clear search"
+          >✕</button>
+      </div>
+  </div>
+  <div id="free-darshan-container" style="margin: 15px 0;"></div>
+</header>
+</header> 
+<div id="hero-section" style="
+    max-width: 600px; 
+    margin: 10px auto 20px auto; 
+    padding: 0 15px; 
+    text-align: center;
+">
+    <div style="
+        position: relative;
+        border-radius: 15px; 
+        overflow: hidden; 
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        border: 2px solid #fff;
+    ">
+        <!-- <!-- <img 
+            src="temple_banner.jpeg" 
+            alt="Srisailam Mallikarjuna Swamy Temple" 
+            style="
+                width: 100%; 
+                height: 200px; /* Fixed height for consistency */
+                object-fit: cover; /* Ensures image covers area without stretching */
+                display: block;
+            "
+        > -->
+        
+        <!-- <div style="
+            position: absolute; 
+            bottom: 0; 
+            left: 0; 
+            width: 100%; 
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); 
+            color: white; 
+            padding: 20px 10px 10px 10px; 
+            font-size: 14px; 
+            font-weight: 500;
+        ">
+            Om Namah Shivaya 🙏
+        </div> -->
     </div>
 </div>
-<div id="free-darshan-container" style="margin: 15px 0;"></div>
-</header>
-
 <main id="app"></main>
 
-<!-- ✅ ONLY ONE search-results section -->
 <section id="search-results" style="display:none;">
-  <h2>Search Results</h2>
+  <h2 id="search-title">Search Results</h2>
   <ul id="search-list"></ul>
 </section>
 
@@ -54,13 +140,99 @@
   </svg>
 </a>
 
+<footer id="temple-footer">
+    <p id="footer-note" style="font-size: 13px; color: #777; text-align:center;">
+        Navigation is provided via Google Maps. Routes may vary based on traffic and conditions.
+    </p>
+
+    <p id="footer-update" style="font-size: 13px; color: #777; text-align:center;">
+        Last updated: December 2025
+    </p>
+
+    <div id="developer-credits" style="text-align: center; display: flex; justify-content: center; align-items: center; flex-wrap: wrap;">
+        <span style="margin-right: 4px;">Developed by: </span>
+        
+        <a href="https://www.linkedin.com/in/bhodini-gundu" target="_blank" class="dev-credit">
+            <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            Gundu Bhodini
+        </a>
+    
+        <span class="divider">|</span>
+
+        <a href="https://www.linkedin.com/in/aditya-karre" target="_blank" class="dev-credit">
+            <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            Aditya Karre
+        </a>
+
+    </div>
+</footer>
 
 <script>
-
 /* ================= GLOBAL STATE ================= */
 let locationsData = [];
 let currentLang = "en";
 let searchQuery = "";
+
+/* ================= STATIC UI TRANSLATIONS ================= */
+const STATIC_TRANSLATIONS = {
+  title: {
+    en: "Srisailam Area Navigation",
+    te: "శ్రీశైలం ప్రాంత నావిగేషన్",
+    hi: "श्रीशैलम क्षेत्र नेविगेशन",
+    ta: "ஸ்ரீசைலம் பகுதி வழிசெலுத்தல்",
+    kn: "ಶ್ರೀಶೈಲಂ ಪ್ರದೇಶ ನ್ಯಾವಿಗೇಷನ್",
+    ml: "ശ്രീശൈലം ഏരിയ നാവിഗേഷൻ"
+  },
+  subtitle: {
+    en: "Select category → choose place → navigate",
+    te: "వర్గాన్ని ఎంచుకోండి → స్థలాన్ని ఎంచుకోండి → నావిగేట్ చేయండి",
+    hi: "श्रेणी चुनें → स्थान चुनें → नेविगेट करें",
+    ta: "வகையைத் தேர்ந்தெடுக்கவும் → இடத்தைத் தேர்ந்தெடுக்கவும் → வழிகாட்டவும்",
+    kn: "ವರ್ಗವನ್ನು ಆಯ್ಕೆಮಾಡಿ → ಸ್ಥಳವನ್ನು ಆಯ್ಕೆಮಾಡಿ → ನ್ಯಾವಿಗೇಟ್ ಮಾಡಿ",
+    ml: "വിഭാഗം തിരഞ്ഞെടുക്കുക → സ്ഥലം തിരഞ്ഞെടുക്കുക → നാവിഗേറ്റ് ചെയ്യുക"
+  },
+  langLabel: {
+    en: "Language:",
+    te: "భాష:",
+    hi: "भाषा:",
+    ta: "மொழி:",
+    kn: "ಭಾಷೆ:",
+    ml: "ഭാഷ:"
+  },
+  searchPlaceholder: {
+    en: "Search places, food, temples…",
+    te: "స్థలాలు, ఆహారం, ఆలయాలను వెతకండి...",
+    hi: "स्थान, भोजन, मंदिर खोजें...",
+    ta: "இடங்கள், உணவு, கோவில்களைத் தேடுங்கள்...",
+    kn: "ಸ್ಥಳಗಳು, ಆಹಾರ, ದೇವಾಲಯಗಳನ್ನು ಹುಡುಕಿ...",
+    ml: "സ്ഥലങ്ങൾ, ഭക്ഷണം, ക്ഷേത്രങ്ങൾ എന്നിവ തിരയുക..."
+  },
+  searchTitle: {
+    en: "Search Results",
+    te: "శోధన ఫలితాలు",
+    hi: "खोज परिणाम",
+    ta: "தேடல் முடிவுகள்",
+    kn: "ಹುಡುಕಾಟ ಫಲಿತಾಂಶಗಳು",
+    ml: "തിരയൽ ഫലങ്ങൾ"
+  }
+};
+
+function updateStaticText() {
+  const titleEl = document.getElementById("app-title");
+  if(titleEl) titleEl.textContent = STATIC_TRANSLATIONS.title[currentLang] || STATIC_TRANSLATIONS.title.en;
+
+  const subtitleEl = document.getElementById("app-subtitle");
+  if(subtitleEl) subtitleEl.textContent = STATIC_TRANSLATIONS.subtitle[currentLang] || STATIC_TRANSLATIONS.subtitle.en;
+
+  const langLabelEl = document.getElementById("lang-label");
+  if(langLabelEl) langLabelEl.textContent = STATIC_TRANSLATIONS.langLabel[currentLang] || STATIC_TRANSLATIONS.langLabel.en;
+
+  const searchInputEl = document.getElementById("searchInput");
+  if(searchInputEl) searchInputEl.placeholder = STATIC_TRANSLATIONS.searchPlaceholder[currentLang] || STATIC_TRANSLATIONS.searchPlaceholder.en;
+
+  const searchTitleEl = document.getElementById("search-title");
+  if(searchTitleEl) searchTitleEl.textContent = STATIC_TRANSLATIONS.searchTitle[currentLang] || STATIC_TRANSLATIONS.searchTitle.en;
+}
 
 /* ================= LOAD DATA ================= */
 fetch("locations.json")
@@ -68,10 +240,9 @@ fetch("locations.json")
   .then(data => {
     locationsData = data;
     searchQuery = "";
-
+    updateStaticText();
     document.getElementById("app").style.display = "block";
     document.getElementById("search-results").style.display = "none";
-
     renderApp();
   })
   .catch(err => console.error("Failed to load locations.json", err));
@@ -113,22 +284,15 @@ function matchesSearch(l) {
   if (!searchQuery) return true;
 
   const query = searchQuery.toLowerCase();
-  
-  // All possible languages
   const allLanguages = ['en', 'te', 'hi', 'ta', 'kn', 'ml'];
   
-  // Build searchable text from all available fields
   let searchableText = "";
-  
-  // Add display name
   searchableText += (l["display name"] || "").toLowerCase() + " ";
   
-  // Add all language names
   allLanguages.forEach(lang => {
     searchableText += (l["name_" + lang] || "").toLowerCase() + " ";
   });
   
-  // Add all language categories
   allLanguages.forEach(lang => {
     const catLabel = CATEGORY_LABELS[l.category]?.[lang];
     if (catLabel) {
@@ -136,15 +300,12 @@ function matchesSearch(l) {
     }
   });
   
-  // Add category key itself
   searchableText += (l.category || "").toLowerCase().replace(/_/g, " ") + " ";
   
-  // Add all language descriptions
   allLanguages.forEach(lang => {
     searchableText += (l["description_" + lang] || "").toLowerCase() + " ";
   });
   
-  // Check if query exists in searchable text
   return searchableText.includes(query);
 }
 
@@ -164,7 +325,7 @@ function renderFreeDarshan() {
 
   btn.onclick = () =>
     window.open(
-      `https://www.google.com/maps/search/?api=1&query=${free.latitude},${free.longitude}`,
+      `https://www.google.com/maps/search/?api=1&query=${l.latitude},${l.longitude}`,
       "_blank"
     );
 
@@ -185,7 +346,6 @@ function renderApp() {
   app.style.display = "block";
   document.getElementById("search-results").style.display = "none";
 
-  // ✅ CATEGORY ICONS
   const CATEGORY_ICONS = {
     TEMPLE: "🛕",
     ASHRAM: "🕉️",
@@ -204,7 +364,6 @@ function renderApp() {
 
   for (const cat in grouped) {
     const section = document.createElement("section");
-
     const h = document.createElement("h2");
     
     const iconSpan = document.createElement("span");
@@ -223,15 +382,8 @@ function renderApp() {
 
     h.onclick = () => {
       const isOpen = ul.style.display === "block";
-
-      document.querySelectorAll("#app ul").forEach(u => {
-        u.style.display = "none";
-      });
-
-      document.querySelectorAll("#app ul div").forEach(d => {
-        d.style.display = "none";
-      });
-
+      document.querySelectorAll("#app ul").forEach(u => u.style.display = "none");
+      document.querySelectorAll("#app ul div").forEach(d => d.style.display = "none");
       ul.style.display = isOpen ? "none" : "block";
     };
 
@@ -254,6 +406,7 @@ function renderApp() {
       
       const btn = document.createElement("button");
       btn.textContent = BUTTON_LABELS.navigate[currentLang];
+      
       btn.onclick = () =>
         window.open(
           `https://www.google.com/maps/search/?api=1&query=${l.latitude},${l.longitude}`,
@@ -308,6 +461,7 @@ function renderSearchResults() {
 
       const btn = document.createElement("button");
       btn.textContent = BUTTON_LABELS.navigate[currentLang];
+      
       btn.onclick = () =>
         window.open(
           `https://www.google.com/maps/search/?api=1&query=${l.latitude},${l.longitude}`,
@@ -334,6 +488,7 @@ function renderSearchResults() {
 /* ================= EVENTS ================= */
 document.getElementById("lang").addEventListener("change", e => {
   currentLang = e.target.value;
+  updateStaticText();
   searchQuery ? renderSearchResults() : renderApp();
 });
 
@@ -342,57 +497,31 @@ const clearBtn = document.getElementById("clearSearch");
 
 searchInput.addEventListener("input", e => {
   searchQuery = e.target.value.trim().toLowerCase();
-  
-  // Show/hide clear button
   clearBtn.style.display = searchQuery ? "flex" : "none";
-  
   searchQuery ? renderSearchResults() : renderApp();
 });
 
-// Clear button click handler
 clearBtn.addEventListener("click", () => {
   searchInput.value = "";
   searchQuery = "";
   clearBtn.style.display = "none";
   renderApp();
-  searchInput.focus(); // Keep focus on search input
+  searchInput.focus();
 });
 
-//* ================= BACK TO TOP VISIBILITY ================= */
+/* ================= BACK TO TOP VISIBILITY ================= */
 document.addEventListener("DOMContentLoaded", () => {
   const backToTopBtn = document.getElementById("back-to-top");
-
-  if (!backToTopBtn) {
-    console.error("Back to top button not found");
-    return;
-  }
-
-  // Hide it initially
+  if (!backToTopBtn) return;
   backToTopBtn.style.display = "none";
-
   window.addEventListener("scroll", () => {
     if (window.scrollY > 150) {
-      // CHANGE THIS from "block" to "flex" to keep the icon centered
       backToTopBtn.style.display = "flex"; 
     } else {
       backToTopBtn.style.display = "none";
     }
   });
 });
-
 </script>
-
-<footer id="temple-footer">
-    <p style="font-size: 13px; color: #777; text-align:center;">
-        Navigation is provided via Google Maps. Routes may vary based on traffic and conditions.
-    </p>
-
-    <p style="font-size: 13px; color: #777; text-align:center;">
-        Last updated: December 2025
-    </p>
-</footer>
-
 </body>
 </html>
-
-
